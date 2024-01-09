@@ -1,19 +1,33 @@
 import { useNavigation } from "@react-navigation/native";
 import U_ScreenLayout from "../U_ScreenLayout";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { View, StyleSheet, Text, useWindowDimensions, Animated, Easing, Pressable, ScrollView, Image, Dimensions, Modal } from "react-native";
 import { Black, PrimaryColor, TextColor, White } from "../../../../Constant/Color";
 import { AntDesign } from '@expo/vector-icons';
 import { Back_1, BlankImage, HomeIcon_2, Icon_11, Icon_41, Icon_42, Icon_43, Icon_44, Icon_45, Icon_46 } from "../../../../Constant/Images";
-
+import { useUser } from "../../../../store/user";
+import { getUser } from "../../../../store/userAsync";
+import { routes } from "../../../../Constant/URL";
+export interface Userinfo {
+    userId: string;
+    firstname: string;
+    lastname: string;
+    short_bio: string;
+    mobile: any;
+    gender: string;
+    email: string;
+    address: string;
+    userType: string;
+  }
 export default function U_MyProfileScreen() {
     const navigation = useNavigation<any>();
     const { width } = useWindowDimensions();
+    const [getuserInfo, setUserInfo] = useState<Userinfo[]>([]);
     const tabs = ["Profile", "Events", "Post", "Donation", "Store"]
     const [active, setActive] = React.useState(0);
     const translateX = React.useRef(new Animated.Value(active * width)).current;
     const [modalPostVisible, setModalPostVisible] = useState(false);
-
+    const [user, setUser] = useUser();
     React.useEffect(() => {
         Animated.timing(translateX, {
             useNativeDriver: true,
@@ -22,6 +36,29 @@ export default function U_MyProfileScreen() {
             easing: Easing.ease,
         }).start();
     }, [active])
+
+    useEffect(() => {
+       
+        (async () => {
+          setUser(await getUser());
+          let response = await fetch(`${routes.getProfile}`, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ user_id: user?.userId }),
+          });
+          let json = await response.json();
+    
+          setUserInfo(json.result.userinfo);
+        })();
+      }, [user?.userId]);
+
+
+      function gotoCareerTipsDetails(): void {
+        navigation.navigate("U_EditProfile")
+       }
+
 
     return (
         <U_ScreenLayout
@@ -77,9 +114,11 @@ export default function U_MyProfileScreen() {
                             </View>
                             <View style={[styles.DataContainer, styles.EditIconBlock]}>
                                 <Text style={styles.Heading}>Name</Text>
-                                <Text style={styles.SubHeading}>Arunaksha Sautya</Text>
+                                <Text style={styles.SubHeading}>
+                                    {getuserInfo && getuserInfo[0] ? getuserInfo[0].firstname : ""}
+                                    </Text>
                             </View>
-                            <Pressable style={styles.BtnContainer}>
+                            <Pressable onPress={() => gotoCareerTipsDetails()} style={styles.BtnContainer}>
                                 <Image
                                     style={styles.EditBtn}
                                     source={Icon_42}
@@ -100,7 +139,7 @@ export default function U_MyProfileScreen() {
                             <View style={styles.DataContainer}>
                                 <Text style={styles.Heading}>About</Text>
                                 <Text style={styles.SubHeading}>
-                                    Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ipsum officiis hic harum aliquid laboriosam sit, quos porro voluptatibus aspernatur distinctio commodi iusto ducimus autem nihil repellendus culpa sapiente veniam ea.
+                                {getuserInfo && getuserInfo[0] ? getuserInfo[0].short_bio : ""}
                                 </Text>
                             </View>
                         </View>
@@ -117,7 +156,7 @@ export default function U_MyProfileScreen() {
                             <View style={styles.DataContainer}>
                                 <Text style={styles.Heading}>Mobile Number</Text>
                                 <Text style={styles.SubHeading}>
-                                    +91 9846-6865-10
+                                {getuserInfo && getuserInfo[0] ? getuserInfo[0].mobile : ""}
                                 </Text>
                             </View>
                         </View>
@@ -134,7 +173,7 @@ export default function U_MyProfileScreen() {
                             <View style={styles.DataContainer}>
                                 <Text style={styles.Heading}>Gender</Text>
                                 <Text style={styles.SubHeading}>
-                                    Male
+                                {getuserInfo && getuserInfo[0] ? getuserInfo[0].gender : ""}
                                 </Text>
                             </View>
                         </View>
@@ -151,7 +190,7 @@ export default function U_MyProfileScreen() {
                             <View style={styles.DataContainer}>
                                 <Text style={styles.Heading}>Email Address</Text>
                                 <Text style={styles.SubHeading}>
-                                    Email@PrayerApp.co.in
+                                {getuserInfo && getuserInfo[0] ? getuserInfo[0].email : ""}
                                 </Text>
                             </View>
                         </View>
@@ -168,8 +207,7 @@ export default function U_MyProfileScreen() {
                             <View style={styles.DataContainer}>
                                 <Text style={styles.Heading}>Address</Text>
                                 <Text style={styles.SubHeading}>
-                                    Yuba Sangha Club, Bandipur Rd, Niranjan Pally,
-                                    Purba Putiary, Kolkata, West Bengal 700070
+                                {getuserInfo && getuserInfo[0] ? getuserInfo[0].address : ""}
                                 </Text>
                             </View>
                         </View>

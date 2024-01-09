@@ -203,7 +203,7 @@ export default function U_HomeScreen() {
         >
           {/* Single Event Tile Start */}
 
-          {getUpcomingEvent?.map(function (item: UpcomingEvent, index: number) {
+          {getUpcomingEvent&&getUpcomingEvent?.map(function (item: UpcomingEvent, index: number) {
             return (
               <View style={styles.EventBlock}>
                 <View style={styles.EventData}>

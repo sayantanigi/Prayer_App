@@ -1,8 +1,8 @@
 {
   "expo": {
-    "name": "PrayerApplication",
+    "name": "Prayer",
     "slug": "PrayerApp",
-    "version": "1.0.1",
+    "version": "1.0.3",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "automatic",
@@ -28,7 +28,10 @@
     "web": {
       "favicon": "./assets/favicon.png"
     },
-    "owner": "arunaksha"
-    
+    // "extra": {
+    //   "eas": {
+    //     "projectId": "5620a0c5-696a-409b-9a98-b8bc6cafb53c"
+    //   }
+    // }
   }
 }

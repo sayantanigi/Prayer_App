@@ -1,19 +1,37 @@
 import { useNavigation } from "@react-navigation/native";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { View, StyleSheet, Text, Pressable, Image, Dimensions, Animated, useWindowDimensions, Easing, TextInput } from "react-native";
 import U_ScreenLayout from "../U_ScreenLayout";
 import PrayerBoardAccordion from "../../../../Component/PrayerBoardAccordion";
 import Link from "../../../../Component/Link";
 import { Black, PrimaryColor, TextColor, White } from "../../../../Constant/Color";
 import { HomeIcon_4, Icon_10, Icon_11, Icon_12, Icon_8, Icon_9 } from "../../../../Constant/Images";
-
+import { routes } from "../../../../Constant/URL";
+import ProgressBar from "../../../../Component/ProgressBar";
+export interface PrayerList {
+    id: string;
+    prayer_name: string;
+    prayer_location?: string;
+    prayer_image: string;
+    prayer_datetime: string;
+    userjoined: string;
+    likedUser: string;
+    prayer_description: string;
+    joinedUserImage: JoinedUserImage[];
+  }
+  
+  export interface JoinedUserImage {
+    user_id: string;
+    joinedUserImage: string;
+  }
 export default function U_PrayerBoardScreen() {
     const navigation = useNavigation<any>();
+    const [loading, setLoading] = useState(false);
     const { width } = useWindowDimensions();
     const tabs = ["All", "Newest", "Upcoming"]
     const [active, setActive] = React.useState(0);
     const translateX = React.useRef(new Animated.Value(active * width)).current;
-
+    const [getPrayerList, setPrayerList] = useState<PrayerList[]>([]);
     React.useEffect(() => {
         Animated.timing(translateX, {
             useNativeDriver: true,
@@ -22,6 +40,38 @@ export default function U_PrayerBoardScreen() {
             easing: Easing.ease,
         }).start();
     }, [active])
+
+
+    useEffect(() => {
+        (async () => {
+          setLoading(true);
+          let response = await fetch( `${
+              active === 0
+                ? routes.getAllPrayer
+                : active === 1
+                ? routes.ListofnewPrayers
+                : routes.ListofupcomingPrayer
+            }`,
+            {
+              method: "GET",
+              headers: {
+                "Content-Type": "application/json",
+              },
+            }
+          );
+          let json = await response.json();
+          setLoading(false);
+          //console.log(json.result);
+          setPrayerList(json.result);
+        })();
+      }, [active]);
+
+      function gotoCareerTipsDetails(id:string,name: string,prayer_image:string): void {
+        navigation.navigate("U_PrayerJoinScreen",{"name":name, "images":prayer_image,"eventid":id})
+        
+    }
+
+    //  
 
     return (
         <U_ScreenLayout
@@ -65,97 +115,140 @@ export default function U_PrayerBoardScreen() {
                 paddingRight: 20,
                 transform: [{ translateX }]
             }}>
-                {new Array(3).fill(0).map((item, index) => (
-                    <View key={index} style={{ width }}>
-                        {new Array(4).fill(0).map((item, Prayerindex) => (
-                            <PrayerBoardAccordion key={Prayerindex}>
-                                <View style={styles.PrayerDetails}>
-                                    {/* Join The Prayer */}
-                                    <View style={styles.PrayerBlock}>
-                                        <View style={styles.PrayerIcon}>
-                                            <Image style={styles.PrayerIconImg} source={Icon_9}
-                                                resizeMode="center"
-                                            />
-                                            <View style={styles.TimeBar}></View>
-                                        </View>
-                                        <View style={styles.PrayerData}>
-                                            <View style={styles.PrayerText}>
-                                                <Text style={styles.PrayerHeading}>Join The Prayer</Text>
-                                                <Text style={styles.PrayerSubHeading}>90 Join 240 Interest</Text>
-                                            </View>
-                                            <Link style={styles.PrayerBtn} to={"U_PrayerJoinScreen"}>
-                                                <Text style={styles.JoinPrayerBtnText}>Join</Text>
-                                                <Image style={styles.JoinPrayerBtnBack} source={HomeIcon_4} />
-                                            </Link>
-                                        </View>
-                                    </View>
+              
 
-                                    {/* Date & Time */}
-                                    <View style={styles.PrayerBlock}>
-                                        <View style={styles.PrayerIcon}>
-                                            <Image style={styles.PrayerIconImg} source={Icon_10}
-                                                resizeMode="center"
-                                            />
-                                            <View style={styles.TimeBar}></View>
-                                        </View>
-                                        <View style={styles.PrayerData}>
-                                            <View style={styles.PrayerText}>
-                                                <Text style={styles.PrayerHeading}>Date & Time</Text>
-                                                <Text style={[styles.PrayerSubHeading, styles.PrayerTextData]}>
-                                                    Friday 17 August 2023, 08:30 PM
-                                                </Text>
-                                            </View>
-                                        </View>
-                                    </View>
-
-                                    {/* About */}
-                                    <View style={styles.PrayerBlock}>
-                                        <View style={styles.PrayerIcon}>
-                                            <Image style={styles.PrayerIconImg} source={Icon_11}
-                                                resizeMode="center"
-                                            />
-                                            <View style={[styles.TimeBar, styles.LongTimeBar]}></View>
-                                        </View>
-                                        <View style={styles.PrayerData}>
-                                            <View style={styles.PrayerText}>
-                                                <Text style={styles.PrayerHeading}>About</Text>
-                                                <Text numberOfLines={7} style={[styles.PrayerSubHeading, styles.PrayerTextData]}>
-                                                    Cras ac velit ut risus accumsan mollis. Duis
-                                                    pellentesque lacus efficitur ornare tincidunt.
-                                                    Donec varius dapibus malesuada. Suspendisse
-                                                    faucibus mi ac blandit efficitur. Ut maximus
-                                                    bibendum leo, eu sodales sapien sollicitudin
-                                                    sed. Vestibulum sollicitudin iaculis dolor, ac
-                                                    feugiat sapien rutrum vel.</Text>
-                                            </View>
-                                        </View>
-                                    </View>
-
-                                    {/* More Details */}
-                                    <View style={styles.PrayerBlock}>
-                                        <View style={styles.PrayerIcon}>
-                                            <Image style={styles.PrayerIconImg} source={Icon_12}
-                                                resizeMode="center"
-                                            />
-                                            <View style={styles.TimeBar}></View>
-                                        </View>
-                                        <View style={styles.PrayerData}>
-                                            <View style={styles.PrayerText}>
-                                                <Text style={styles.PrayerHeading}>More Details</Text>
-                                                <Text style={[styles.PrayerSubHeading, styles.PrayerTextData]}>
-                                                    Brief about the Prayer
-                                                </Text>
-                                            </View>
-                                            <Link style={styles.PrayerBtn} to="U_PrayerDetailsScreen">
-                                                <Text style={styles.ViewPrayerBtnText}>View</Text>
-                                            </Link>
-                                        </View>
-                                    </View>
-                                </View>
-                            </PrayerBoardAccordion>
-                        ))}
+{new Array(3).fill(0).map((item, index) => (
+          <View style={{ width }}>
+            {getPrayerList && Array.isArray(getPrayerList) &&
+              getPrayerList.map((item, Prayerindex) => (
+                <PrayerBoardAccordion key={Prayerindex} item={item}>
+                  <View style={styles.PrayerDetails}>
+                    {/* Join The Prayer */}
+                    <View style={styles.PrayerBlock}>
+                      <View style={styles.PrayerIcon}>
+                        <Image
+                          style={styles.PrayerIconImg}
+                          source={Icon_9}
+                          resizeMode="center"
+                        />
+                        <View style={styles.TimeBar}></View>
+                      </View>
+                      <View style={styles.PrayerData}>
+                        <View style={styles.PrayerText}>
+                          <Text style={styles.PrayerHeading}>
+                            Join The Prayer
+                          </Text>
+                          <Text style={styles.PrayerSubHeading}>
+                            {item.userjoined}
+                          </Text>
+                        </View>
+                        <Pressable
+                          style={styles.PrayerBtn}
+                         // onPress={navigation.navigation("O_PrayerJoinScreen")}
+                          onPress={() => gotoCareerTipsDetails(item.id,item.prayer_name,item.prayer_image)}
+                        >
+                          <Text style={styles.JoinPrayerBtnText}>Join</Text>
+                          <Image
+                            style={styles.JoinPrayerBtnBack}
+                            source={HomeIcon_4}
+                          />
+                        </Pressable>
+                      </View>
                     </View>
-                ))}
+
+                    {/* Date & Time */}
+                    <View style={styles.PrayerBlock}>
+                      <View style={styles.PrayerIcon}>
+                        <Image
+                          style={styles.PrayerIconImg}
+                          source={Icon_10}
+                          resizeMode="center"
+                        />
+                        <View style={styles.TimeBar}></View>
+                      </View>
+                      <View style={styles.PrayerData}>
+                        <View style={styles.PrayerText}>
+                          <Text style={styles.PrayerHeading}>Date & Time</Text>
+                          <Text
+                            style={[
+                              styles.PrayerSubHeading,
+                              styles.PrayerTextData,
+                            ]}
+                          >
+                            {item.prayer_datetime}
+                          </Text>
+                        </View>
+                      </View>
+                    </View>
+
+                    {/* About */}
+                    <View style={styles.PrayerBlock}>
+                      <View style={styles.PrayerIcon}>
+                        <Image
+                          style={styles.PrayerIconImg}
+                          source={Icon_11}
+                          resizeMode="center"
+                        />
+                        <View
+                          style={[styles.TimeBar, styles.LongTimeBar]}
+                        ></View>
+                      </View>
+                      <View style={styles.PrayerData}>
+                        <View style={styles.PrayerText}>
+                          <Text style={styles.PrayerHeading}>About</Text>
+                          <Text
+                            numberOfLines={7}
+                            style={[
+                              styles.PrayerSubHeading,
+                              styles.PrayerTextData,
+                            ]}
+                          >
+                            {item.prayer_description}
+                          </Text>
+                        </View>
+                      </View>
+                    </View>
+
+                    {/* More Details */}
+                    <View style={styles.PrayerBlock}>
+                      <View style={styles.PrayerIcon}>
+                        <Image
+                          style={styles.PrayerIconImg}
+                          source={Icon_12}
+                          resizeMode="center"
+                        />
+                        <View style={styles.TimeBar}></View>
+                      </View>
+                      <View style={styles.PrayerData}>
+                        <View style={styles.PrayerText}>
+                          <Text style={styles.PrayerHeading}>More Details</Text>
+                          <Text
+                            style={[
+                              styles.PrayerSubHeading,
+                              styles.PrayerTextData,
+                            ]}
+                          >
+                            Brief about the Prayer
+                          </Text>
+                        </View>
+                        <Link
+                          style={styles.PrayerBtn}
+                          to="U_PrayerDetailsScreen"
+                        >
+                          <Text style={styles.ViewPrayerBtnText}>View</Text>
+                        </Link>
+                      </View>
+                    </View>
+                  </View>
+                </PrayerBoardAccordion>
+              ))}
+
+            <ProgressBar loading={loading} />
+          </View>
+        ))}
+
+
+
             </Animated.View>
         </U_ScreenLayout>
     );
@@ -292,3 +385,7 @@ const styles = StyleSheet.create({
         bottom: 0,
     },
 })
+
+function setLoading(arg0: boolean) {
+    throw new Error("Function not implemented.");
+}

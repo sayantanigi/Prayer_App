@@ -188,7 +188,7 @@ function DrawerView({ setDrawer }: any) {
                                 </Pressable>
                                 <Pressable
                                     style={styles.ModalLogoutBtn}
-                                    onPress={() => Navigation.navigate("O_SignInScreen")}
+                                    onPress={() => Navigation.navigate("U_SignInScreen")}
                                 >
                                     <Text style={styles.ModalLogoutBtnText}>Log Out</Text>
                                 </Pressable>

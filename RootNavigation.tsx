@@ -1,6 +1,7 @@
 import React from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import { useFonts } from "expo-font";
 
 // StartUp Screen
 import U_SplashScreen from "./Screens/Module/User/StartUpScreen/U_SplashScreen";
@@ -109,8 +110,24 @@ import O_OrderDetailScreen from "./Screens/Module/Organizer/StoreScreen/O_OrderD
 
 // Module Choose Screen
 import ModuleOptionScreen from "./ModuleOptionScreen";
+import O_EditProfile from "./Screens/Module/Organizer/ProfileScreen/O_EditProfile";
+import U_EditProfile from "./Screens/Module/User/ProfileScreen/U_EditProfile";
 
 export function RootNavigation() {
+  // Fonts
+  const [fontsLoaded] = useFonts({
+    "Inter-Black": require("./assets/Fonts/Inter-Black.ttf"),
+    "Inter-Bold": require("./assets/Fonts/Inter-Bold.ttf"),
+    "Inter-ExtraBold": require("./assets/Fonts/Inter-ExtraBold.ttf"),
+    "Inter-ExtraLight": require("./assets/Fonts/Inter-ExtraLight.ttf"),
+    "Inter-Light": require("./assets/Fonts/Inter-Light.ttf"),
+    "Inter-Medium": require("./assets/Fonts/Inter-Medium.ttf"),
+    "Inter-Regular": require("./assets/Fonts/Inter-Regular.ttf"),
+    "Inter-SemiBold": require("./assets/Fonts/Inter-SemiBold.ttf"),
+    "Inter-Thin": require("./assets/Fonts/Inter-Thin.ttf"),
+  });
+  if (!fontsLoaded) return null;
+
   return (
     <NavigationContainer>
       <Root />
@@ -142,8 +159,14 @@ function Root() {
       /> */}
       <Stack.Screen name="U_SignInScreen" component={U_SignInScreen} />
       <Stack.Screen name="U_SignUpScreen" component={U_SignUpScreen} />
-      <Stack.Screen name="U_ForgotPasswordScreen" component={U_ForgotPasswordScreen} />
-      <Stack.Screen name="U_ChooseProfileScreen" component={U_ChooseProfileScreen} />
+      <Stack.Screen
+        name="U_ForgotPasswordScreen"
+        component={U_ForgotPasswordScreen}
+      />
+      <Stack.Screen
+        name="U_ChooseProfileScreen"
+        component={U_ChooseProfileScreen}
+      />
 
       <Stack.Screen
         name="O_SplashScreen"
@@ -152,8 +175,14 @@ function Root() {
       />
       <Stack.Screen name="O_SignInScreen" component={O_SignInScreen} />
       <Stack.Screen name="O_SignUpScreen" component={O_SignUpScreen} />
-      <Stack.Screen name="O_ForgotPasswordScreen" component={O_ForgotPasswordScreen} />
-      <Stack.Screen name="O_ChooseProfileScreen" component={O_ChooseProfileScreen} />
+      <Stack.Screen
+        name="O_ForgotPasswordScreen"
+        component={O_ForgotPasswordScreen}
+      />
+      <Stack.Screen
+        name="O_ChooseProfileScreen"
+        component={O_ChooseProfileScreen}
+      />
 
       {/* Home Screen */}
       <Stack.Screen name="U_HomeScreen" component={U_HomeScreen} />
@@ -161,71 +190,149 @@ function Root() {
       <Stack.Screen name="O_HomeScreen" component={O_HomeScreen} />
 
       {/* Other Screen */}
-      <Stack.Screen name="U_AlarmScreen" component={U_AlarmScreen}
+      <Stack.Screen
+        name="U_AlarmScreen"
+        component={U_AlarmScreen}
         options={{
           animation: "slide_from_bottom",
           presentation: "transparentModal",
-        }} />
+        }}
+      />
       <Stack.Screen name="U_EventScreen" component={U_EventScreen} />
       <Stack.Screen name="U_AboutUsScreen" component={U_AboutUsScreen} />
-      <Stack.Screen name="U_PrivacyPolicyScreen" component={U_PrivacyPolicyScreen} />
-      <Stack.Screen name="U_TermsConditionScreen" component={U_TermsConditionScreen} />
-      <Stack.Screen name="U_ChangePasswordScreen" component={U_ChangePasswordScreen} />
+      <Stack.Screen
+        name="U_PrivacyPolicyScreen"
+        component={U_PrivacyPolicyScreen}
+      />
+      <Stack.Screen
+        name="U_TermsConditionScreen"
+        component={U_TermsConditionScreen}
+      />
+      <Stack.Screen
+        name="U_ChangePasswordScreen"
+        component={U_ChangePasswordScreen}
+      />
       <Stack.Screen name="U_ContactUsScreen" component={U_ContactUsScreen} />
       <Stack.Screen name="U_SettingScreen" component={U_SettingScreen} />
 
-      <Stack.Screen name="O_AlarmScreen" component={O_AlarmScreen}
+      <Stack.Screen
+        name="O_AlarmScreen"
+        component={O_AlarmScreen}
         options={{
           animation: "slide_from_bottom",
           presentation: "transparentModal",
-        }} />
+        }}
+      />
       <Stack.Screen name="O_EventScreen" component={O_EventScreen} />
       <Stack.Screen name="O_AboutUsScreen" component={O_AboutUsScreen} />
-      <Stack.Screen name="O_PrivacyPolicyScreen" component={O_PrivacyPolicyScreen} />
-      <Stack.Screen name="O_TermsConditionScreen" component={O_TermsConditionScreen} />
-      <Stack.Screen name="O_ChangePasswordScreen" component={O_ChangePasswordScreen} />
+      <Stack.Screen
+        name="O_PrivacyPolicyScreen"
+        component={O_PrivacyPolicyScreen}
+      />
+      <Stack.Screen
+        name="O_TermsConditionScreen"
+        component={O_TermsConditionScreen}
+      />
+      <Stack.Screen
+        name="O_ChangePasswordScreen"
+        component={O_ChangePasswordScreen}
+      />
       <Stack.Screen name="O_ContactUsScreen" component={O_ContactUsScreen} />
       <Stack.Screen name="O_SettingScreen" component={O_SettingScreen} />
 
       {/* Prayer Board */}
-      <Stack.Screen name="U_PrayerBoardScreen" component={U_PrayerBoardScreen} />
-      <Stack.Screen name="U_PrayerDetailsScreen" component={U_PrayerDetailsScreen} />
+      <Stack.Screen
+        name="U_PrayerBoardScreen"
+        component={U_PrayerBoardScreen}
+      />
+      <Stack.Screen
+        name="U_PrayerDetailsScreen"
+        component={U_PrayerDetailsScreen}
+      />
       <Stack.Screen name="U_PrayerJoinScreen" component={U_PrayerJoinScreen} />
 
-      <Stack.Screen name="O_PrayerBoardScreen" component={O_PrayerBoardScreen} />
-      <Stack.Screen name="O_PrayerDetailsScreen" component={O_PrayerDetailsScreen} />
+      <Stack.Screen
+        name="O_PrayerBoardScreen"
+        component={O_PrayerBoardScreen}
+      />
+      <Stack.Screen
+        name="O_PrayerDetailsScreen"
+        component={O_PrayerDetailsScreen}
+      />
       <Stack.Screen name="O_PrayerJoinScreen" component={O_PrayerJoinScreen} />
       <Stack.Screen name="O_PrayerEditScreen" component={O_PrayerEditScreen} />
-      <Stack.Screen name="O_PrayerAddScreen" component={O_PrayerAddScreen} />      
+      <Stack.Screen name="O_PrayerAddScreen" component={O_PrayerAddScreen} />
+      <Stack.Screen name="O_EditProfile" component={O_EditProfile} />
+      <Stack.Screen name="U_EditProfile" component={U_EditProfile} />
+      
 
       {/* Donation Screen */}
       <Stack.Screen name="U_DonationScreen" component={U_DonationScreen} />
-      <Stack.Screen name="U_OrganizationListScreen" component={U_OrganizationListScreen} />
-      <Stack.Screen name="U_OrganizationDetailsScreen" component={U_OrganizationDetailsScreen} />
-      <Stack.Screen name="U_DonationPaidScreen" component={U_DonationPaidScreen} />
+      <Stack.Screen
+        name="U_OrganizationListScreen"
+        component={U_OrganizationListScreen}
+      />
+      <Stack.Screen
+        name="U_OrganizationDetailsScreen"
+        component={U_OrganizationDetailsScreen}
+      />
+      <Stack.Screen
+        name="U_DonationPaidScreen"
+        component={U_DonationPaidScreen}
+      />
 
       <Stack.Screen name="O_DonationScreen" component={O_DonationScreen} />
-      <Stack.Screen name="O_OrganizationListScreen" component={O_OrganizationListScreen} />
-      <Stack.Screen name="O_OrganizationDetailsScreen" component={O_OrganizationDetailsScreen} />
-      <Stack.Screen name="O_DonationPaidScreen" component={O_DonationPaidScreen} />
-      <Stack.Screen name="O_DonationAddScreen" component={O_DonationAddScreen} />
+      <Stack.Screen
+        name="O_OrganizationListScreen"
+        component={O_OrganizationListScreen}
+      />
+      <Stack.Screen
+        name="O_OrganizationDetailsScreen"
+        component={O_OrganizationDetailsScreen}
+      />
+      <Stack.Screen
+        name="O_DonationPaidScreen"
+        component={O_DonationPaidScreen}
+      />
+      <Stack.Screen
+        name="O_DonationAddScreen"
+        component={O_DonationAddScreen}
+      />
 
       {/* Podcast Screen */}
       <Stack.Screen name="U_PodcastScreen" component={U_PodcastScreen} />
-      <Stack.Screen name="U_PodcastListScreen" component={U_PodcastListScreen} />
-      <Stack.Screen name="U_LikePodcastScreen" component={U_LikePodcastScreen} />
+      <Stack.Screen
+        name="U_PodcastListScreen"
+        component={U_PodcastListScreen}
+      />
+      <Stack.Screen
+        name="U_LikePodcastScreen"
+        component={U_LikePodcastScreen}
+      />
 
       <Stack.Screen name="O_PodcastScreen" component={O_PodcastScreen} />
-      <Stack.Screen name="O_PodcastListScreen" component={O_PodcastListScreen} />
-      <Stack.Screen name="O_LikePodcastScreen" component={O_LikePodcastScreen} />
-      <Stack.Screen name="O_PodcastAddScreen" component={O_PodcastAddScreen} />      
+      <Stack.Screen
+        name="O_PodcastListScreen"
+        component={O_PodcastListScreen}
+      />
+      <Stack.Screen
+        name="O_LikePodcastScreen"
+        component={O_LikePodcastScreen}
+      />
+      <Stack.Screen name="O_PodcastAddScreen" component={O_PodcastAddScreen} />
 
       {/* Social Screen */}
       <Stack.Screen name="U_SocialScreen" component={U_SocialScreen} />
-      <Stack.Screen name="U_SocialCommentScreen" component={U_SocialCommentScreen} />
+      <Stack.Screen
+        name="U_SocialCommentScreen"
+        component={U_SocialCommentScreen}
+      />
 
       <Stack.Screen name="O_SocialScreen" component={O_SocialScreen} />
-      <Stack.Screen name="O_SocialCommentScreen" component={O_SocialCommentScreen} />
+      <Stack.Screen
+        name="O_SocialCommentScreen"
+        component={O_SocialCommentScreen}
+      />
 
       {/* Porfile Screen */}
       <Stack.Screen name="U_MyProfileScreen" component={U_MyProfileScreen} />
@@ -234,26 +341,50 @@ function Root() {
 
       {/* Video Screen */}
       <Stack.Screen name="U_VideoScreen" component={U_VideoScreen} />
-      <Stack.Screen name="U_VideoDetailsScreen" component={U_VideoDetailsScreen} />
-      <Stack.Screen name="U_VideoPlayerScreen" component={U_VideoPlayerScreen} />
+      <Stack.Screen
+        name="U_VideoDetailsScreen"
+        component={U_VideoDetailsScreen}
+      />
+      <Stack.Screen
+        name="U_VideoPlayerScreen"
+        component={U_VideoPlayerScreen}
+      />
 
       <Stack.Screen name="O_VideoScreen" component={O_VideoScreen} />
-      <Stack.Screen name="O_VideoDetailsScreen" component={O_VideoDetailsScreen} />
-      <Stack.Screen name="O_VideoPlayerScreen" component={O_VideoPlayerScreen} />
-      <Stack.Screen name="O_VideoAddScreen" component={O_VideoAddScreen} />      
+      <Stack.Screen
+        name="O_VideoDetailsScreen"
+        component={O_VideoDetailsScreen}
+      />
+      <Stack.Screen
+        name="O_VideoPlayerScreen"
+        component={O_VideoPlayerScreen}
+      />
+      <Stack.Screen name="O_VideoAddScreen" component={O_VideoAddScreen} />
 
       {/* Store Screen */}
       <Stack.Screen name="U_StoreScreen" component={U_StoreScreen} />
       <Stack.Screen name="U_ProductScreen" component={U_ProductScreen} />
-      <Stack.Screen name="U_ProductCartScreen" component={U_ProductCartScreen} />
+      <Stack.Screen
+        name="U_ProductCartScreen"
+        component={U_ProductCartScreen}
+      />
       <Stack.Screen name="U_CheckoutScreen" component={U_CheckoutScreen} />
-      <Stack.Screen name="U_OrderDetailScreen" component={U_OrderDetailScreen} />
+      <Stack.Screen
+        name="U_OrderDetailScreen"
+        component={U_OrderDetailScreen}
+      />
 
       <Stack.Screen name="O_StoreScreen" component={O_StoreScreen} />
       <Stack.Screen name="O_ProductScreen" component={O_ProductScreen} />
-      <Stack.Screen name="O_ProductCartScreen" component={O_ProductCartScreen} />
+      <Stack.Screen
+        name="O_ProductCartScreen"
+        component={O_ProductCartScreen}
+      />
       <Stack.Screen name="O_CheckoutScreen" component={O_CheckoutScreen} />
-      <Stack.Screen name="O_OrderDetailScreen" component={O_OrderDetailScreen} />
+      <Stack.Screen
+        name="O_OrderDetailScreen"
+        component={O_OrderDetailScreen}
+      />
     </Stack.Navigator>
   );
 }

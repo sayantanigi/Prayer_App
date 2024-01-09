@@ -3,8 +3,8 @@ import React, { useState } from "react";
 import { StyleSheet, View, Image, Text, TextInput, Pressable } from "react-native";
 import U_ScreenLayout from "../U_ScreenLayout";
 import { SuccessBack, SuccessText, TextColor, White } from "../../../../Constant/Color";
-import { SnackBar } from "../../../../Component/SnackBar";
 import { Back_2, Back_4, Back_5, BlankImage, HomeIcon_4 } from "../../../../Constant/Images";
+import { SnackBar } from "../../../../Component/CustomSnackbar";
 
 export default function U_PrayerJoinScreen() {
     const navigation = useNavigation<any>();
@@ -20,7 +20,7 @@ export default function U_PrayerJoinScreen() {
                 SnackBar.hide();
             },
             backgroundColor: SuccessBack,
-            color: SuccessText,
+            
         });
     };
 

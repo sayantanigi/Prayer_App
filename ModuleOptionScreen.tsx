@@ -19,19 +19,6 @@ import { BackgroundColor } from "./Constant/Color";
 export default function ModuleOptionScreen() {
     const navigation = useNavigation<any>();
 
-    // Font
-    const [fontsLoaded] = useFonts({
-        "Inter-Black": require("./assets/Fonts/Inter-Black.ttf"),
-        "Inter-Bold": require("./assets/Fonts/Inter-Bold.ttf"),
-        "Inter-ExtraBold": require("./assets/Fonts/Inter-ExtraBold.ttf"),
-        "Inter-ExtraLight": require("./assets/Fonts/Inter-ExtraLight.ttf"),
-        "Inter-Light": require("./assets/Fonts/Inter-Light.ttf"),
-        "Inter-Medium": require("./assets/Fonts/Inter-Medium.ttf"),
-        "Inter-Regular": require("./assets/Fonts/Inter-Regular.ttf"),
-        "Inter-SemiBold": require("./assets/Fonts/Inter-SemiBold.ttf"),
-        "Inter-Thin": require("./assets/Fonts/Inter-Thin.ttf"),
-    });
-
     return (
         <SafeAreaView style={styles.Container}>
             <ScrollView horizontal showsHorizontalScrollIndicator={false}>
